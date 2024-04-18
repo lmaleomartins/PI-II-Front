@@ -12,7 +12,7 @@ function App() {
 			<div className="relative rounded-r-3xl overflow-hidden">
 				<div className="absolute w-full h-screen bg-gradient-to-b from-[#977644]/30 to-black/30 z-10 "></div>
 				<img
-					src="http://localhost:3000/assets/image.png"
+					src="https://igor-ca.github.io/cinema-recomendation-frontend/assets/image.png"
 					alt="cinema"
 					className="grayscale max-h-screen w-full"
 				/>
