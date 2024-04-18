@@ -1,20 +1,16 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginSignupPage from "./pages/LoginSignupPage";
 import Page404 from "./pages/Page404";
+import BrowserPage from "./pages/BrowserPage";
+import NavBar from "./components/NavBar";
 
 function App() {
-	const [state, setState] = useState("Register");
-
-	const toggleState = () => {
-		state === "Login" ? setState("Register") : setState("Login");
-	};
-
 	return (
-		<div className="bg-slate-50 min-h-svh text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-			<BrowserRouter basename="/">
+		<div className="bg-[#FAF9F6] min-h-svh text-slate-700 dark:bg-slate-800 dark:text-slate-300 flex">
+			<BrowserRouter>
+				<NavBar></NavBar>
 				<Routes>
-					<Route path="/" element={<LoginSignupPage />}></Route>
+					<Route path="/" element={<BrowserPage />}></Route>
 					<Route path="/signup" element={<LoginSignupPage />}></Route>
 					<Route path="/login" element={<LoginSignupPage />}></Route>
 					<Route path="/*" element={<Page404 />}></Route>

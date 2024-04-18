@@ -1,10 +1,12 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ToggleButton from "../components/ToggleButton";
+import { IoIosArrowBack } from "react-icons/io";
 
 export default function LoginSignupPage(){
     const page = useLocation().pathname === "/login"? "Login":"Register"
+	const navigate = useNavigate()
     return (
-		<div className="bg-[#FAF9F6] flex  w-full">
+		<div className="bg-[#FAF9F6] flex w-full absolute left-0">
 			<div className="relative rounded-r-3xl overflow-hidden">
 				<div className="absolute w-full h-screen bg-gradient-to-b from-[#977644]/30 to-black/30 z-10 "></div>
 				<img
@@ -12,6 +14,9 @@ export default function LoginSignupPage(){
 					alt="cinema"
 					className="grayscale max-h-screen w-full"
 				/>
+				<button className="absolute top-0 z-20 text-white text-3xl p-3" aria-label="back to main" onClick={() => {navigate("/")}}>
+					<IoIosArrowBack/>
+				</button>
 				<div className="absolute bottom-0 text-white p-12">
 					<p className="text-2xl font-bold">Lorem ipsum is simply</p>
 					<p>Lorem ipsum is simply</p>
