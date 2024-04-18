@@ -7,7 +7,7 @@ export default function ToggleButton() {
         page === "Login"?navigate("/signup"):navigate("/login")
     }
     return (
-		<div class="flex w-fit relative bg-[#F8EDDD]  shadow-md p-2 mb-3 mt-6 rounded-full">
+		<div className="flex w-fit relative bg-[#F8EDDD]  shadow-md p-2 mb-3 mt-6 rounded-full">
 			<input
 				type="radio"
 				id="radio-1"
@@ -17,7 +17,7 @@ export default function ToggleButton() {
 				checked={page === "Login"}
 			/>
 			<label
-				class="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/login:text-white py-2 px-10"
+				className="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/login:text-white py-2 px-10"
 				for="radio-1"
 			>
 				Login
@@ -31,12 +31,12 @@ export default function ToggleButton() {
 				checked={page === "Register"}
 			/>
 			<label
-				class="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/signup:text-white py-2 px-10"
+				className="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/signup:text-white py-2 px-10"
 				for="radio-2"
 			>
 				Signup
 			</label>
-			<span class="absolute h-10 w-[121px] bg-[#9E896A] rounded-full transition peer-checked/login:translate-x-0 peer-checked/signup:w-[130px] peer-checked/signup:translate-x-[121px]"></span>
+			<span className="absolute h-10 w-[121px] bg-[#9E896A] rounded-full transition peer-checked/login:translate-x-0 peer-checked/signup:w-[130px] peer-checked/signup:translate-x-[121px]"></span>
 		</div>
 	);
 }
