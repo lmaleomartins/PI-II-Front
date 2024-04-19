@@ -34,9 +34,9 @@ export default function ToggleButton() {
 				className="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/signup:text-white py-2 px-10"
 				for="radio-2"
 			>
-				Signup
+				Registrar
 			</label>
-			<span className="absolute h-10 w-[121px] bg-[#9E896A] rounded-full transition peer-checked/login:translate-x-0 peer-checked/signup:w-[130px] peer-checked/signup:translate-x-[121px]"></span>
+			<span className="absolute h-10 w-[121px] bg-[#9E896A] rounded-full transition peer-checked/login:translate-x-0 peer-checked/signup:w-[140px] peer-checked/signup:translate-x-[121px]"></span>
 		</div>
 	);
 }

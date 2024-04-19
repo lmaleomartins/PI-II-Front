@@ -18,32 +18,31 @@ export default function LoginSignupPage(){
 					<IoIosArrowBack/>
 				</button>
 				<div className="absolute bottom-0 text-white p-12">
-					<p className="text-2xl font-bold">Lorem ipsum is simply</p>
-					<p>Lorem ipsum is simply</p>
+					<p className="text-2xl font-bold">Primeira regra do Clube da Luta: você não fala do Clube da Luta</p>
+					<p>Primeira regra do BILL: você fala sobre o BILL</p>
 				</div>
 			</div>
 
 			<div className="flex-grow flex justify-center items-center">
 				<div className="flex flex-col items-center max-w-md">
-					<h1 className="font-semibold">welcome to lorem...!</h1>
+					<h1 className="font-semibold">Bem-vindo ao BILL</h1>
 					
 					<ToggleButton ></ToggleButton>
 					
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit. Corporis sint facilis, voluptas possimus
+						Sua busca interminável por algo para assistir acaba aqui.
 					</p>
 					<form className="flex self-stretch flex-col" action="">
 						<label
 							className="self-start w-full mb-6 mt-6"
 							htmlFor="email"
 						>
-							Email address
+							E-mail ou usuário
 							<input
 								type="email"
 								id="email"
 								className="rounded-full border border-[#9E896A] w-full p-2.5 mt-2"
-								placeholder="Enter your email adress"
+								placeholder="Insira seu e-mail ou nome de usuário"
 							/>
 						</label>
 						{page === "Register" && (
@@ -51,12 +50,12 @@ export default function LoginSignupPage(){
 								className="self-start w-full mb-6"
 								htmlFor="username"
 							>
-								User name
+								Usuário
 								<input
 									type="text"
 									id="username"
 									className="rounded-full border border-[#9E896A] w-full p-2.5 mt-2"
-									placeholder="Enter your username"
+									placeholder="Insira seu nome de usuário"
 								/>
 							</label>
 						)}
@@ -64,12 +63,12 @@ export default function LoginSignupPage(){
 							className="self-start w-full mb-6"
 							htmlFor="password"
 						>
-							Password
+							Senha
 							<input
 								type="password"
 								id="password"
 								className="rounded-full border border-[#9E896A] w-full p-2.5 mt-2"
-								placeholder="Enter your password"
+								placeholder="Insira sua senha"
 							/>
 						</label>
 						{page === "Login" && (
@@ -77,11 +76,11 @@ export default function LoginSignupPage(){
 								href="/forgot"
 								className="underline text-[#9E896A] self-end my-1"
 							>
-								Forgot password?
+								Esqueci minha senha
 							</a>
 						)}
 						<button className="py-2 px-10 bg-[#9E896A] rounded-full text-white self-end mt-4">
-							{page === "Login"?"Login":"Register"}
+							{page === "Login"?"Login":"Registrar"}
 						</button>
 					</form>
 				</div>
