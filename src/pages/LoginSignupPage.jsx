@@ -23,7 +23,7 @@ export default function LoginSignupPage(){
 				</div>
 			</div>
 
-			<div className="flex-grow flex justify-center items-center">
+			<div className="flex-grow flex justify-center pt-20">
 				<div className="flex flex-col items-center max-w-md">
 					<h1 className="font-semibold">Bem-vindo ao BILL</h1>
 					
@@ -37,12 +37,12 @@ export default function LoginSignupPage(){
 							className="self-start w-full mb-6 mt-6"
 							htmlFor="email"
 						>
-							E-mail ou usuário
+							Email
 							<input
 								type="email"
 								id="email"
 								className="rounded-full border border-[#9E896A] w-full p-2.5 mt-2"
-								placeholder="Insira seu e-mail ou nome de usuário"
+								placeholder="Insira seu e-mail"
 							/>
 						</label>
 						{page === "Register" && (
