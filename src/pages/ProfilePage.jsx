@@ -33,22 +33,22 @@ export default function ProfilePage() {
 			<nav className="mt-5 text-white bg-[#9E896A] p-2 rounded-md">
 				<ul className="flex gap-2 justify-around text-center">
 					<li className={getStyle(activeLink === "")}>
-						<Link to={"./"}>Perfil</Link>
+						<Link to={"./"} className="w-full block">Perfil</Link>
 					</li>
 					<li className={getStyle(activeLink === "feed")}>
-						<Link to={"./feed"}>Atividade</Link>
+						<Link to={"./feed"} className="w-full block">Atividade</Link>
 					</li>
 					<li className={getStyle(activeLink === "favorites")}>
-						<Link to={"./favorites"}>Favoritos</Link>
+						<Link to={"./favorites"} className="w-full block">Favoritos</Link>
 					</li>
 					<li className={getStyle(activeLink === "list")}>
-						<Link to={"./list"}>Minha</Link> lista
+						<Link to={"./list"} className="w-full block">Minha lista</Link>
 					</li>
 					<li className={getStyle(activeLink === "settings")}>
-						<Link to={"./settings"}>Ajustes</Link>
+						<Link to={"./settings"} className="w-full block">Ajustes</Link>
 					</li>
 					<li className={getStyle(activeLink === "logout")}>
-						<Link to={"./logout"}>Sair</Link>
+						<Link to={"./logout"} className="w-full block">Sair</Link>
 					</li>
 				</ul>
 			</nav>
