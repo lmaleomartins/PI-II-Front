@@ -1,6 +1,6 @@
 export default function GenreComponent({genre}) {
 	return (
-		<div className="relative h-fit rounded-lg overflow-hidden text-center shadow-lg">
+		<div className="relative h-fit rounded-lg overflow-hidden text-center shadow-lg aspect-[2/3]">
 			<label
 				htmlFor={`${genre}-checkmark`}
 				className="text-white p-20 cursor-pointer font-semibold text-2xl absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -15,8 +15,9 @@ export default function GenreComponent({genre}) {
 			/>
 			<div className="absolute w-full h-full bg-gradient-to-b rounded from-[#977644]/30 to-black/30 z-10 peer-checked:border-8 border-[#977644]"></div>
 			<img
-				src="https://igor-ca.github.io/cinema-recomendation-frontend/assets/image.png"
+				src={`https://igor-ca.github.io/cinema-recomendation-frontend/assets/${genre}.jpg`}
 				alt={`${genre}-cover`}
+				className="w-full h-full object-cover"
 			/>
 		</div>
 	);

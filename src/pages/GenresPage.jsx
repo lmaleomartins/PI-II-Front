@@ -5,7 +5,7 @@ const genres = [
 	"Ação",
 	"Aventura",
 	"Comédia",
-	"Cinema e arte",
+	"Cinema e Arte",
 	"Drama",
 	"Documentário",
 	"Fantasia",
