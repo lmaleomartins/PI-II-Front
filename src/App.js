@@ -4,6 +4,8 @@ import Page404 from "./pages/Page404";
 import BrowserPage from "./pages/BrowserPage";
 import NavBar from "./components/NavBar";
 import GenresPage from "./pages/GenresPage";
+import RecomendationPage from "./pages/RecomendationPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
 	return (
@@ -13,6 +15,8 @@ function App() {
 				<Routes>
 					<Route path="/" element={<BrowserPage />}></Route>
 					<Route path="/genres" element={<GenresPage />}></Route>
+					<Route path="/recomendations" element={<RecomendationPage />}></Route>
+					<Route path="/profile/*" element={<ProfilePage />}></Route>
 					<Route path="/signup" element={<LoginSignupPage />}></Route>
 					<Route path="/login" element={<LoginSignupPage />}></Route>
 					<Route path="/*" element={<Page404 />}></Route>
