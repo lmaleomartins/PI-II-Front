@@ -56,7 +56,7 @@ export default function NavBar() {
 						Perfil
 					</Link>
 				</li>
-				<li>
+				{/* <li>
 					<Link
 						to={"/suport"}
 						className={getStyle(activeLink === "suport")}
@@ -74,7 +74,7 @@ export default function NavBar() {
 						<FaGear />
 						Ajustes
 					</Link>
-				</li>
+				</li> */}
 			</ul>
 			<Link
 				to={"/login"}
