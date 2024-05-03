@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 import GenresPage from "./pages/GenresPage";
 import RecomendationPage from "./pages/RecomendationPage";
 import ProfilePage from "./pages/ProfilePage";
+import MoviePage from "./pages/MoviePage";
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Route path="/" element={<BrowserPage />}></Route>
 					<Route path="/genres" element={<GenresPage />}></Route>
 					<Route path="/recomendations" element={<RecomendationPage />}></Route>
+					<Route path="/movie/:id" element={<MoviePage />}></Route>
 					<Route path="/profile/*" element={<ProfilePage />}></Route>
 					<Route path="/signup" element={<LoginSignupPage />}></Route>
 					<Route path="/login" element={<LoginSignupPage />}></Route>

@@ -38,11 +38,13 @@ export default function BrowserPage() {
 			<div className="grid grid-cols-5 h-fit gap-8 p-8">
 				{data.map((movie) => {
 					return (
-						<img
-							className="w-full rounded-lg shadow-xl"
-							src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-							alt=""
-						/>
+						<a href={`/movie/${movie.id}`}>
+							<img
+								className="w-full rounded-lg shadow-xl"
+								src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+								alt=""
+							/>
+						</a>
 					);
 				})}
 			</div>
