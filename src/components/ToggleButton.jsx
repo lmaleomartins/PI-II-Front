@@ -18,7 +18,7 @@ export default function ToggleButton() {
 			/>
 			<label
 				className="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/login:text-white py-2 px-10"
-				for="radio-1"
+				htmlFor="radio-1"
 			>
 				Login
 			</label>
@@ -32,7 +32,7 @@ export default function ToggleButton() {
 			/>
 			<label
 				className="text-[#9E896A] font-semibold rounded-full z-10 cursor-pointer transition peer-checked/signup:text-white py-2 px-10"
-				for="radio-2"
+				htmlFor="radio-2"
 			>
 				Registrar
 			</label>

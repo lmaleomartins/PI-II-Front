@@ -4,7 +4,7 @@ import Page404 from "./Page404";
 import { useEffect, useState } from "react";
 import data from "../Data.json";
 
-export default function ProfilePage() {
+export default function ProfilePage({ userInfo }) {
 	const location = useLocation();
 	const [activeLink, setActiveLink] = useState(
 		location.pathname.replace("/profile", "")
@@ -13,13 +13,13 @@ export default function ProfilePage() {
 	useEffect(() => {
 		setActiveLink(location.pathname.replace("/profile", ""));
 	}, [location]);
-	return (
+	return userInfo ? (
 		<div className="text-[#9E896A] w-full p-6">
 			<div className="flex justify-between w-full">
 				<div className="flex gap-2 items-end">
 					<FaRegUser className="text-6xl" />
 					<div className="border-b-2 border-[#9E896A] space-x-3">
-						<span className="text-2xl">Nome de usuário</span>
+						<span className="text-2xl">{userInfo.username}</span>
 						<button className="bg-[#9E896A] text-white px-5 rounded-md ">
 							Editar
 						</button>
@@ -44,7 +44,11 @@ export default function ProfilePage() {
 							Favoritos
 						</Link>
 					</li>
-					<li className={getStyle(activeLink === "/list" || activeLink === "")}>
+					<li
+						className={getStyle(
+							activeLink === "/list" || activeLink === ""
+						)}
+					>
 						<Link to={"./list"} className="w-full block">
 							Minha lista
 						</Link>
@@ -66,7 +70,7 @@ export default function ProfilePage() {
 						element={
 							<div className="grid grid-cols-5 h-fit gap-8 p-8">
 								{data.map((movie, i) => {
-                                    if(i%2) return null
+									if (i % 2) return null;
 									return (
 										<img
 											className="w-full rounded-lg shadow-xl"
@@ -113,6 +117,18 @@ export default function ProfilePage() {
 					<Route path="/*" element={<Page404 />}></Route>
 				</Routes>
 			</div>
+		</div>
+	) : (
+		<div className="p-5 text-slate-400 flex-grow dark:text-slate-500 text-center text-5xl font-extrabold min-h-svh flex flex-col justify-center">
+			<span>404</span>
+			<span>Usuário não autenticado</span>
+			<span>Favor logar para poder ver essa pagina</span>
+			<Link
+				className="text-base underline mt-3 hover:text-slate-500 dark:hover:text-slate-400"
+				to={"/login"}
+			>
+				logar
+			</Link>
 		</div>
 	);
 }
