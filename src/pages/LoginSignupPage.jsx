@@ -3,12 +3,10 @@ import ToggleButton from "../components/ToggleButton";
 import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";
 import { useState } from "react";
-import useUser from "../hooks/useUser";
 
 export default function LoginSignupPage({setUserInfo}) {
 	const page = useLocation().pathname === "/login" ? "Login" : "Register";
 	const [formData, setFormData] = useState({ username: "", password: "" });
-	const { setUser } = useUser();
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
