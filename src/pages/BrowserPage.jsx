@@ -1,7 +1,45 @@
 import { FaSearch } from "react-icons/fa";
 import data from "../Data.json";
+import MoviesList from "../components/MoviesList";
+import { useCallback, useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 export default function BrowserPage() {
+	const [page, setPage] = useState(1);
+	const [moviesList, setMoviesList] = useState([]);
+	const observer = useRef();
+
+	useEffect(() => {
+        const fetchPage = async (pageNumber) => {
+            try {
+                const response = await axios({
+                    method: "GET",
+                    url: `http://127.0.0.1:8000/movies/?page=${pageNumber}`,
+                });
+				if (moviesList.length > 0){
+					setMoviesList(prevMovies => [...prevMovies, ...response.data.results]);
+				}else{
+					setMoviesList([...response.data.results]);
+				}
+				console.log(pageNumber)
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchPage(page);
+    }, [page]);
+
+	const lastMovieElementRef = useCallback(node => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                setPage(prevPage => prevPage + 1);
+            }
+        });
+        if (node) observer.current.observe(node);
+    }, []);
+
+
 	return (
 		<div className="flex-grow w-full">
 			<div>
@@ -35,19 +73,7 @@ export default function BrowserPage() {
 				Mais assistidos
 			</h1>
 
-			<div className="grid grid-cols-5 h-fit gap-8 p-8">
-				{data.map((movie) => {
-					return (
-						<a href={`/movie/${movie.id}`} key={movie.id}>
-							<img
-								className="w-full rounded-lg shadow-xl"
-								src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-								alt=""
-							/>
-						</a>
-					);
-				})}
-			</div>
+			{moviesList.length > 0 && <MoviesList list={moviesList} lastMovieElementRef={lastMovieElementRef} />}
 		</div>
 	);
 }
