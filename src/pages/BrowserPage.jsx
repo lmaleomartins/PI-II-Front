@@ -3,42 +3,68 @@ import data from "../Data.json";
 import MoviesList from "../components/MoviesList";
 import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import debaunce from "../utils/debaunce";
 
 export default function BrowserPage() {
 	const [page, setPage] = useState(1);
-	const [moviesList, setMoviesList] = useState([]);
-	const observer = useRef();
+    const [moviesList, setMoviesList] = useState([]);
+    const [hasNext, setHasNext] = useState(false);
+    const [search, setSearch] = useState('');
+    const [query, setQuery] = useState('');
+    const observer = useRef();
 
-	useEffect(() => {
-        const fetchPage = async (pageNumber) => {
-            try {
-                const response = await axios({
-                    method: "GET",
-                    url: `http://127.0.0.1:8000/movies/?page=${pageNumber}`,
-                });
-				if (moviesList.length > 0){
-					setMoviesList(prevMovies => [...prevMovies, ...response.data.results]);
-				}else{
-					setMoviesList([...response.data.results]);
+    const fetchPage = async (pageNumber, searchQuery) => {
+        try {
+            const response = await axios({
+                method: 'GET',
+                url: `http://127.0.0.1:8000/movies/`,
+                params: {
+                    page: pageNumber,
+                    search: searchQuery,
+                },
+            });
+            const results = response.data.results;
+            const nextPage = response.data.next !== null;
+            if (pageNumber > 1) {
+                setMoviesList((prevMovies) => [...prevMovies, ...results]);
+            } else {
+                setMoviesList(results);
+            }
+            setHasNext(nextPage);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPage(page, query);
+    }, [page, query]);
+
+    const handleChange = (e) => {
+        const inputValue = e.target.value;
+        setSearch(inputValue);
+        debouncedSearch(inputValue);
+    };
+
+    const debouncedSearch = useCallback(
+        debaunce((value) => {
+            setQuery(value);
+            setPage(1); 
+        }, 500),
+        []
+    );
+	const lastMovieElementRef = useCallback(
+		(node) => {
+			if (observer.current) observer.current.disconnect();
+			observer.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && hasNext) {
+					setPage((prevPage) => prevPage + 1);
 				}
-				console.log(pageNumber)
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchPage(page);
-    }, [page]);
-
-	const lastMovieElementRef = useCallback(node => {
-        if (observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                setPage(prevPage => prevPage + 1);
-            }
-        });
-        if (node) observer.current.observe(node);
-    }, []);
-
+			});
+			if (node) observer.current.observe(node);
+		},
+		[hasNext]
+	);
 
 	return (
 		<div className="flex-grow w-full">
@@ -57,6 +83,8 @@ export default function BrowserPage() {
 								name="search"
 								placeholder="Pesquisar ..."
 								className="bg-transparent placeholder:text-[#9E896A]/50 w-full p-2.5 mx-4"
+								onChange={handleChange}
+								value={search}
 							/>
 						</label>
 						<img
@@ -73,7 +101,12 @@ export default function BrowserPage() {
 				Mais assistidos
 			</h1>
 
-			{moviesList.length > 0 && <MoviesList list={moviesList} lastMovieElementRef={lastMovieElementRef} />}
+			{moviesList.length > 0 && (
+				<MoviesList
+					list={moviesList}
+					lastMovieElementRef={lastMovieElementRef}
+				/>
+			)}
 		</div>
 	);
 }
