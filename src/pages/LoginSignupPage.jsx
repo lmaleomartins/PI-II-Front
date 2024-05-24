@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ToggleButton from "../components/ToggleButton";
 import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";
@@ -150,12 +150,12 @@ export default function LoginSignupPage({setUserInfo}) {
 							</label>
 						)}
 						{page === "Login" && (
-							<a
-								href="/forgot"
+							<Link
+								to="/forgot"
 								className="underline text-[#9E896A] self-end my-1"
 							>
 								Esqueci minha senha
-							</a>
+							</Link>
 						)}
 						<button
 							className="py-2 px-10 bg-[#9E896A] rounded-full text-white self-end mt-4"
