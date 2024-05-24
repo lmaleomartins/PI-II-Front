@@ -3,56 +3,62 @@ import data from "../Data.json";
 import MoviesList from "../components/MoviesList";
 import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import debaunce from "../utils/debaunce";
+import debounce from "../utils/debounce";
+import { useSearchParams } from "react-router-dom";
 
 export default function BrowserPage() {
-	const [page, setPage] = useState(1);
-    const [moviesList, setMoviesList] = useState([]);
-    const [hasNext, setHasNext] = useState(false);
-    const [search, setSearch] = useState('');
-    const [query, setQuery] = useState('');
-    const observer = useRef();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const initialSearch = searchParams.get("search") || "";
+	const initialPage = parseInt(searchParams.get("page"), 10) || 1;
 
-    const fetchPage = async (pageNumber, searchQuery) => {
-        try {
-            const response = await axios({
-                method: 'GET',
-                url: `http://127.0.0.1:8000/movies/`,
-                params: {
-                    page: pageNumber,
-                    search: searchQuery,
-                },
-            });
-            const results = response.data.results;
-            const nextPage = response.data.next !== null;
-            if (pageNumber > 1) {
-                setMoviesList((prevMovies) => [...prevMovies, ...results]);
-            } else {
-                setMoviesList(results);
-            }
-            setHasNext(nextPage);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+	const [page, setPage] = useState(initialPage);
+	const [moviesList, setMoviesList] = useState([]);
+	const [hasNext, setHasNext] = useState(false);
+	const [search, setSearch] = useState(initialSearch);
+	const [query, setQuery] = useState(initialSearch);
+	const observer = useRef();
 
-    useEffect(() => {
-        fetchPage(page, query);
-    }, [page, query]);
+	const fetchPage = async (pageNumber, searchQuery) => {
+		try {
+			const response = await axios({
+				method: "GET",
+				url: `http://127.0.0.1:8000/movies/`,
+				params: {
+					page: pageNumber,
+					search: searchQuery,
+				},
+			});
+			const results = response.data.results;
+			const nextPage = response.data.next !== null;
+			if (pageNumber > 1 && moviesList.length > 0) {
+				setMoviesList((prevMovies) => [...prevMovies, ...results]);
+			} else {
+				setMoviesList(results);
+			}
+			setHasNext(nextPage);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-    const handleChange = (e) => {
-        const inputValue = e.target.value;
-        setSearch(inputValue);
-        debouncedSearch(inputValue);
-    };
+	useEffect(() => {
+		fetchPage(page, query);
+		setSearchParams({ search: query, page: page });
+	}, [page, query]);
 
-    const debouncedSearch = useCallback(
-        debaunce((value) => {
-            setQuery(value);
-            setPage(1); 
-        }, 500),
-        []
-    );
+	const handleChange = (e) => {
+		const inputValue = e.target.value;
+		setSearch(inputValue);
+		debouncedSearch(inputValue);
+	};
+
+	const debouncedSearch = useCallback(
+		debounce((value) => {
+			setQuery(value);
+			setPage(1); // Reset page number on new search
+		}, 500),
+		[]
+	);
 	const lastMovieElementRef = useCallback(
 		(node) => {
 			if (observer.current) observer.current.disconnect();

@@ -36,7 +36,7 @@ export default function MoviePage() {
 						className="bg-[#9E896A] rounded-md text-white text-3xl p-2"
 						aria-label="back to main"
 						onClick={() => {
-							navigate("/");
+							navigate(-1);
 						}}
 					>
 						<IoIosArrowBack />
