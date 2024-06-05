@@ -9,24 +9,32 @@ import axios from "axios";
 export default function MoviePage() {
 	const { id } = useParams();
 	const [movie, setMovie] = useState();
-    const navigate = useNavigate()
-
+	const navigate = useNavigate();
+	const [search, setSearch] = useState("");
 
 	useEffect(() => {
-        const fetchPage = async () => {
-            try {
-                const response = await axios({
-                    method: "GET",
-                    url: `http://127.0.0.1:8000/movies/${id}`,
-                });
-				const selectedMovie = response.data
+		const fetchPage = async () => {
+			try {
+				const response = await axios({
+					method: "GET",
+					url: `http://127.0.0.1:8000/movies/${id}`,
+				});
+				const selectedMovie = response.data;
 				setMovie(selectedMovie);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchPage();
-    }, [id]);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchPage();
+	}, [id]);
+
+	const handleChange = (e) => {
+		const inputValue = e.target.value;
+		setSearch(inputValue);
+	};
+	const handleEnter = (e) => {
+		if (e.key === "Enter") navigate(`/?search=${search}`);
+	};
 
 	return movie ? (
 		<div className="bg-[#FAF9F6] text-[#9E896A] w-full min-h-screen absolute left-0 p-5">
@@ -42,39 +50,44 @@ export default function MoviePage() {
 						<IoIosArrowBack />
 					</button>
 					<div className="flex items-center gap-4">
-                        <label
-                            htmlFor="search"
-                            className="flex text-white overflow-hidden items-center bg-[#9E896A] px-2.5 rounded-full w-96"
-                        >
-                            <span className="sr-only">Pesquisa</span>
-                            <FaSearch />
-                            <input
-                                type="text"
-                                id="search"
-                                name="search"
-                                placeholder="Pesquisar ..."
-                                className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4"
-                            />
-                        </label>
-                        <img
+						<label
+							htmlFor="search"
+							className="flex text-white overflow-hidden items-center bg-[#9E896A] px-2.5 rounded-full w-96"
+						>
+							<span className="sr-only">Pesquisa</span>
+							<FaSearch />
+							<input
+								type="text"
+								id="search"
+								name="search"
+								placeholder="Pesquisar ..."
+								value={search}
+								onKeyDown={handleEnter}
+								onChange={handleChange}
+								className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4"
+							/>
+						</label>
+						<img
 							src="https://igor-ca.github.io/cinema-recomendation-frontend/assets/image.png"
 							alt=""
 							className="rounded-full aspect-square h-10 cursor-pointer"
 						/>
-                    </div>
+					</div>
 				</div>
 				<div className="flex justify-center mt-5">
 					<div>
-                        <img
-                            className="max-w-80 rounded-lg shadow-xl"
-                            src={`https://image.tmdb.org/t/p/w500/${movie.poster_url}`}
-                            alt=""
-                        />
-                        <div className="flex justify-between items-baseline">
-                            <button className="text-white bg-[#9E896A] p-2 rounded-md mt-3">Marcar como assistido</button>
-                            <StarRating></StarRating>
-                        </div>
-                    </div>
+						<img
+							className="max-w-80 rounded-lg shadow-xl"
+							src={`https://image.tmdb.org/t/p/w500/${movie.poster_url}`}
+							alt=""
+						/>
+						<div className="flex justify-between items-baseline">
+							<button className="text-white bg-[#9E896A] p-2 rounded-md mt-3">
+								Marcar como assistido
+							</button>
+							<StarRating></StarRating>
+						</div>
+					</div>
 					<div>
 						<h1 className="px-5 w-fit border-b-[#9E896A] text-2xl font-semibold border-b-4">
 							{movie.title}

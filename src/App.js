@@ -14,9 +14,10 @@ function App() {
 
 	useEffect(() => {
 		const accessToken = localStorage.getItem("accessToken");
+		const refreshToken = localStorage.getItem("refreshToken");
 		const username = localStorage.getItem("username");
 		if (accessToken && username) {
-			setUserInfo({ accessToken, username });
+			setUserInfo({ accessToken,refreshToken, username });
 		}
 	}, []);
 	return (
@@ -31,9 +32,20 @@ function App() {
 						element={<RecomendationPage />}
 					></Route>
 					<Route path="/movie/:id" element={<MoviePage />}></Route>
-					<Route path="/profile/*" element={<ProfilePage  userInfo={userInfo}/>}></Route>
+					<Route
+						path="/profile/*"
+						element={
+							<ProfilePage
+								userInfo={userInfo}
+								setUserInfo={setUserInfo}
+							/>
+						}
+					></Route>
 					<Route path="/signup" element={<LoginSignupPage />}></Route>
-					<Route path="/login" element={<LoginSignupPage setUserInfo={setUserInfo}/>}></Route>
+					<Route
+						path="/login"
+						element={<LoginSignupPage setUserInfo={setUserInfo} />}
+					></Route>
 					<Route path="/*" element={<Page404 />}></Route>
 				</Routes>
 			</BrowserRouter>

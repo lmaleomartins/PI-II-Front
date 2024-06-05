@@ -1,11 +1,19 @@
 import { FaRegUser } from "react-icons/fa";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import {
+	Link,
+	Route,
+	Routes,
+	useLocation,
+	useNavigate,
+} from "react-router-dom";
 import Page404 from "./Page404";
 import { useEffect, useState } from "react";
 import data from "../Data.json";
+import axios from "axios";
 
-export default function ProfilePage({ userInfo }) {
+export default function ProfilePage({ userInfo, setUserInfo }) {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [activeLink, setActiveLink] = useState(
 		location.pathname.replace("/profile", "")
 	);
@@ -13,6 +21,27 @@ export default function ProfilePage({ userInfo }) {
 	useEffect(() => {
 		setActiveLink(location.pathname.replace("/profile", ""));
 	}, [location]);
+
+	const logout = async () => {
+		try {
+			await axios({
+				method: "POST",
+				headers: {
+					authorization: `Bearer ${userInfo.accessToken}`,
+				},
+				data: {
+					"refresh": userInfo.refreshToken
+				},
+				url: `http://127.0.0.1:8000/logout/`,
+			});
+
+			localStorage.clear();
+			setUserInfo(null);
+			navigate("/");
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return userInfo ? (
 		<div className="text-[#9E896A] w-full p-6">
 			<div className="flex justify-between w-full">
@@ -57,9 +86,7 @@ export default function ProfilePage({ userInfo }) {
 						<Link to={"./settings"} className="w-full block">Ajustes</Link>
 					</li> */}
 					<li className={getStyle(activeLink === "/logout")}>
-						<Link to={"./logout"} className="w-full block">
-							Sair
-						</Link>
+						<button onClick={logout}>Sair</button>
 					</li>
 				</ul>
 			</nav>
