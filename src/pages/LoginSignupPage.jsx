@@ -50,8 +50,7 @@ export default function LoginSignupPage({ setUserInfo }) {
 				url: `http://127.0.0.1:8000/register/`,
 			});
 			console.log(response);
-			//navigate(`/user/${userFetch.data.username}`);
-			//window.location.reload(true);
+			navigate(`/login`);
 		} catch (error) {
 			console.log(error);
 		}
