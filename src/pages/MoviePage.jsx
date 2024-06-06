@@ -58,7 +58,7 @@ export default function MoviePage({userInfo}) {
 			}
 		};
 		fetchPage();
-		//fetchRecomended();
+		fetchRecomended();
 	}, [id]);
 
 	const checkWatchedMovie = () => {

@@ -33,7 +33,7 @@ function App() {
 					></Route>
 					<Route
 						path="/recomendations"
-						element={<RecomendationPage />}
+						element={<RecomendationPage userInfo={userInfo} />}
 					></Route>
 					<Route
 						path="/movie/:id"
