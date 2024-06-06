@@ -5,14 +5,32 @@ import { FaSearch } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import StarRating from "../components/StarRating";
 import axios from "axios";
+import api from "../utils/api";
 
-export default function MoviePage() {
+export default function MoviePage({userInfo}) {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [movie, setMovie] = useState();
 	const [search, setSearch] = useState("");
 	const [recomendations, setRecomendations] = useState([]);
+	const [userList, setUserList] = useState([]);
+	const [updated, setUpdated] = useState(false)
 
+	useEffect(() => {
+		const fetchList = async () => {
+			try {
+				const response = await api.get(`/watched-list/`);
+				const list = response.data.map((object) => object.movie);
+				setUserList(list);
+			} catch (error) {
+				console.log(error)
+			}
+		};
+		if(userInfo){
+			fetchList();
+		}
+		setUpdated(false)
+	}, [updated]);
 	useEffect(() => {
 		const fetchPage = async () => {
 			try {
@@ -40,8 +58,28 @@ export default function MoviePage() {
 			}
 		};
 		fetchPage();
-		fetchRecomended();
+		//fetchRecomended();
 	}, [id]);
+
+	const checkWatchedMovie = () => {
+		if (userList) {
+			return userList.map((movie) => movie.id.toString()).includes(id);
+		}
+		return false;
+	};
+	const addOrRemoveMovie = async () => {
+		try {
+			const movieInList = checkWatchedMovie();
+			const url = movieInList
+				? "/watched-list/remove/"
+				: "/watched-list/add/";
+			const packageData = movieInList ? { movie_id: id } : { movie: id };
+			await api.post(url, packageData);
+			setUpdated(true)
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleChange = (e) => {
 		const inputValue = e.target.value;
@@ -91,9 +129,14 @@ export default function MoviePage() {
 							src={`https://image.tmdb.org/t/p/w500/${movie.poster_url}`}
 							alt=""
 						/>
-						<div className="flex justify-between items-baseline">
-							<button className="text-white bg-[#9E896A] p-2 rounded-md mt-3">
-								Marcar como assistido
+						<div className="flex gap-2 justify-between items-baseline">
+							<button
+								className="text-white bg-[#9E896A] p-2 rounded-md mt-3 w-full"
+								onClick={addOrRemoveMovie}
+							>
+								{checkWatchedMovie()
+									? "Remover da lista"
+									: "Marcar como assistido"}
 							</button>
 							<StarRating></StarRating>
 						</div>
@@ -112,18 +155,17 @@ export default function MoviePage() {
 					Titulos semelhantes
 				</h2>
 				<div className="grid grid-cols-5 h-fit gap-8 py-3">
-					{recomendations
-						.map((movieItem) => {
-							return (
-								<a href={`/movie/${movieItem.id}`}>
-									<img
-										className="w-full rounded-lg shadow-xl"
-										src={`https://image.tmdb.org/t/p/w500/${movieItem.poster_url}`}
-										alt=""
-									/>
-								</a>
-							);
-						})}
+					{recomendations.map((movieItem) => {
+						return (
+							<a href={`/movie/${movieItem.id}`}>
+								<img
+									className="w-full rounded-lg shadow-xl"
+									src={`https://image.tmdb.org/t/p/w500/${movieItem.poster_url}`}
+									alt=""
+								/>
+							</a>
+						);
+					})}
 				</div>
 			</div>
 		</div>

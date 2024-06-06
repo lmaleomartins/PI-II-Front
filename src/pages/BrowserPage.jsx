@@ -93,11 +93,6 @@ export default function BrowserPage() {
 								value={search}
 							/>
 						</label>
-						<img
-							src="https://igor-ca.github.io/cinema-recomendation-frontend/assets/image.png"
-							alt=""
-							className="rounded-full aspect-square h-10 cursor-pointer"
-						/>
 					</div>
 					<div className="bg-[url(https://ntvb.tmsimg.com/assets/p16645155_v_h8_ae.jpg?w=960&h=540)] bg-no-repeat bg-cover bg-bottom	w-full h-80 rounded-b-3xl shadow-xl"></div>
 				</div>

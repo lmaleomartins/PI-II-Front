@@ -32,7 +32,10 @@ function App() {
 						path="/recomendations"
 						element={<RecomendationPage />}
 					></Route>
-					<Route path="/movie/:id" element={<MoviePage />}></Route>
+					<Route
+						path="/movie/:id"
+						element={<MoviePage userInfo={userInfo} />}
+					></Route>
 					<Route
 						path="/profile/*"
 						element={

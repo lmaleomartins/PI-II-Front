@@ -10,6 +10,7 @@ import Page404 from "./Page404";
 import { useEffect, useState } from "react";
 import data from "../Data.json";
 import api from "../utils/api";
+import MoviesList from "../components/MoviesList";
 
 export default function ProfilePage({ userInfo, setUserInfo }) {
 	const location = useLocation();
@@ -17,16 +18,28 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 	const [activeLink, setActiveLink] = useState(
 		location.pathname.replace("/profile", "")
 	);
+	const [userList, setUserList] = useState([]);
+
+	useEffect(() => {
+		const fetchList = async () => {
+			const response = await api.get(`/watched-list/`);
+			const list = response.data.map(object => object.movie)
+			console.log(list);
+			setUserList(list);
+		};
+		if(userInfo){
+			fetchList();
+		}
+	}, []);
 
 	useEffect(() => {
 		setActiveLink(location.pathname.replace("/profile", ""));
-
 	}, [location]);
 
 	const logout = async () => {
 		try {
-			const refreshToken = {refresh: userInfo.refreshToken}
-			console.log("User info:",userInfo)
+			const refreshToken = { refresh: userInfo.refreshToken };
+			console.log("User info:", userInfo);
 			await api.post("/logout/", refreshToken);
 			localStorage.clear();
 			setUserInfo(null);
@@ -48,19 +61,13 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 					</div>
 				</div>
 				<div className="text-center border-b-2 border-[#9E896A] text-2xl">
-					6 <br />
+					{userList.length} <br />
 					filmes assistidos
 				</div>
 			</div>
 
 			<nav className="mt-5 text-white bg-[#9E896A] p-2 rounded-md">
 				<ul className="flex gap-2 justify-around text-center">
-					{/* <li className={getStyle(activeLink === "")}>
-						<Link to={"./"} className="w-full block">Perfil</Link>
-					</li>
-					<li className={getStyle(activeLink === "feed")}>
-						<Link to={"./feed"} className="w-full block">Atividade</Link>
-					</li> */}
 					<li className={getStyle(activeLink === "/favorites")}>
 						<Link to={"./favorites"} className="w-full block">
 							Favoritos
@@ -75,14 +82,14 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 							Minha lista
 						</Link>
 					</li>
-					{/* <li className={getStyle(activeLink === "settings")}>
-						<Link to={"./settings"} className="w-full block">Ajustes</Link>
-					</li> */}
 					<li className={getStyle(activeLink === "/logout")}>
-						<button className="w-full" onClick={logout}>Sair</button>
+						<button className="w-full" onClick={logout}>
+							Sair
+						</button>
 					</li>
 				</ul>
 			</nav>
+
 			<div>
 				<Routes>
 					<Route
@@ -105,33 +112,17 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 					<Route
 						path="/"
 						element={
-							<div className="grid grid-cols-5 h-fit gap-8 p-8">
-								{data.map((movie) => {
-									return (
-										<img
-											className="w-full rounded-lg shadow-xl"
-											src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-											alt=""
-										/>
-									);
-								})}
-							</div>
+							<MoviesList
+								list={userList}
+							/>
 						}
 					></Route>
 					<Route
 						path="/list"
 						element={
-							<div className="grid grid-cols-5 h-fit gap-8 p-8">
-								{data.map((movie) => {
-									return (
-										<img
-											className="w-full rounded-lg shadow-xl"
-											src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-											alt=""
-										/>
-									);
-								})}
-							</div>
+							<MoviesList
+								list={userList}
+							/>
 						}
 					></Route>
 					<Route path="/*" element={<Page404 />}></Route>
