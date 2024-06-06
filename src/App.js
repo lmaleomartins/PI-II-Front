@@ -27,7 +27,10 @@ function App() {
 				<NavBar></NavBar>
 				<Routes>
 					<Route path="/" element={<BrowserPage />}></Route>
-					<Route path="/genres" element={<GenresPage />}></Route>
+					<Route
+						path="/genres"
+						element={<GenresPage userInfo={userInfo} />}
+					></Route>
 					<Route
 						path="/recomendations"
 						element={<RecomendationPage />}
