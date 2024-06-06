@@ -9,7 +9,7 @@ import {
 import Page404 from "./Page404";
 import { useEffect, useState } from "react";
 import data from "../Data.json";
-import axios from "axios";
+import api from "../utils/api";
 
 export default function ProfilePage({ userInfo, setUserInfo }) {
 	const location = useLocation();
@@ -20,21 +20,14 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 
 	useEffect(() => {
 		setActiveLink(location.pathname.replace("/profile", ""));
+
 	}, [location]);
 
 	const logout = async () => {
 		try {
-			await axios({
-				method: "POST",
-				headers: {
-					authorization: `Bearer ${userInfo.accessToken}`,
-				},
-				data: {
-					"refresh": userInfo.refreshToken
-				},
-				url: `http://127.0.0.1:8000/logout/`,
-			});
-
+			const refreshToken = {refresh: userInfo.refreshToken}
+			console.log("User info:",userInfo)
+			await api.post("/logout/", refreshToken);
 			localStorage.clear();
 			setUserInfo(null);
 			navigate("/");
@@ -86,7 +79,7 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 						<Link to={"./settings"} className="w-full block">Ajustes</Link>
 					</li> */}
 					<li className={getStyle(activeLink === "/logout")}>
-						<button onClick={logout}>Sair</button>
+						<button className="w-full" onClick={logout}>Sair</button>
 					</li>
 				</ul>
 			</nav>

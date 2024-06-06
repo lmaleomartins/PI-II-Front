@@ -3,8 +3,9 @@ import ToggleButton from "../components/ToggleButton";
 import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";
 import { useState } from "react";
+import api from "../utils/api";
 
-export default function LoginSignupPage({setUserInfo}) {
+export default function LoginSignupPage({ setUserInfo }) {
 	const page = useLocation().pathname === "/login" ? "Login" : "Register";
 	const [formData, setFormData] = useState({ username: "", password: "" });
 	const navigate = useNavigate();
@@ -16,23 +17,22 @@ export default function LoginSignupPage({setUserInfo}) {
 
 	const login = async () => {
 		try {
-			const response = await axios({
-				method: "POST",
-				data: formData,
-				withCredentials: true,
-				headers: {
-					Authorization: process.env.REACT_APP_API_KEY,
-				},
-				url: `http://127.0.0.1:8000/api/token/`,
-			});
-
-			// Save JWT and user info in local storage
-			localStorage.setItem("accessToken", response.data.access);
+			const response = await api.post("/api/token/", formData);
+			const accessToken = response.data.access;
+			const username = response.data.username;
+			if (accessToken && username) {
+				setUserInfo({
+					username,
+					accessToken,
+					refreshToken: response.data.refresh,
+					id: response.data.id,
+				});
+			}
+			localStorage.setItem("username", username);
+			localStorage.setItem("accessToken", accessToken);
 			localStorage.setItem("refreshToken", response.data.refresh);
-			localStorage.setItem("username", response.data.username);
-			setUserInfo(response.data)
-			// Set authentication status
-			
+			localStorage.setItem("id", response.data.id);
+			console.log("Response:", response.data);
 			navigate(`/profile`);
 		} catch (error) {
 			console.log(error);

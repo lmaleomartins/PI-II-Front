@@ -16,8 +16,9 @@ function App() {
 		const accessToken = localStorage.getItem("accessToken");
 		const refreshToken = localStorage.getItem("refreshToken");
 		const username = localStorage.getItem("username");
+		const id = localStorage.getItem("id");
 		if (accessToken && username) {
-			setUserInfo({ accessToken,refreshToken, username });
+			setUserInfo({ accessToken, refreshToken, username, id });
 		}
 	}, []);
 	return (
