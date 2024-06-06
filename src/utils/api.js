@@ -39,12 +39,10 @@ api.interceptors.response.use(
 					}
 				);
 
-				const newAccessToken = response.data.accessToken;
-				const newRefreshToken = response.data.refreshToken;
+				const newAccessToken = response.data.access;
 
 				// Update tokens in local storage
 				localStorage.setItem("accessToken", newAccessToken);
-				localStorage.setItem("refreshToken", newRefreshToken);
 
 				// Update authorization header for the original request
 				originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

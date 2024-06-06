@@ -30,7 +30,7 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 		if(userInfo){
 			fetchList();
 		}
-	}, []);
+	}, [userInfo]);
 
 	useEffect(() => {
 		setActiveLink(location.pathname.replace("/profile", ""));
