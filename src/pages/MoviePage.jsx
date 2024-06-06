@@ -8,9 +8,10 @@ import axios from "axios";
 
 export default function MoviePage() {
 	const { id } = useParams();
-	const [movie, setMovie] = useState();
 	const navigate = useNavigate();
+	const [movie, setMovie] = useState();
 	const [search, setSearch] = useState("");
+	const [recomendations, setRecomendations] = useState([]);
 
 	useEffect(() => {
 		const fetchPage = async () => {
@@ -25,7 +26,21 @@ export default function MoviePage() {
 				console.log(error);
 			}
 		};
+		const fetchRecomended = async () => {
+			try {
+				const response = await axios({
+					method: "GET",
+					url: `http://127.0.0.1:8000/recommendations/similarity/${id}/`,
+				});
+				const recomendations = response.data;
+				console.log(recomendations);
+				setRecomendations(recomendations);
+			} catch (error) {
+				console.log(error);
+			}
+		};
 		fetchPage();
+		fetchRecomended();
 	}, [id]);
 
 	const handleChange = (e) => {
@@ -67,11 +82,6 @@ export default function MoviePage() {
 								className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4"
 							/>
 						</label>
-						<img
-							src="https://igor-ca.github.io/cinema-recomendation-frontend/assets/image.png"
-							alt=""
-							className="rounded-full aspect-square h-10 cursor-pointer"
-						/>
 					</div>
 				</div>
 				<div className="flex justify-center mt-5">
@@ -88,7 +98,7 @@ export default function MoviePage() {
 							<StarRating></StarRating>
 						</div>
 					</div>
-					<div>
+					<div className="flex-grow">
 						<h1 className="px-5 w-fit border-b-[#9E896A] text-2xl font-semibold border-b-4">
 							{movie.title}
 						</h1>
@@ -101,21 +111,20 @@ export default function MoviePage() {
 				<h2 className="w-fit border-b-[#9E896A] text-2xl font-semibold border-b-4 mt-2">
 					Titulos semelhantes
 				</h2>
-				{/* <div className="grid grid-cols-5 h-fit gap-8 py-3">
-					{data
-						.filter((movieItem, index) => (movieItem.id.toString() !== id && index < 5))
+				<div className="grid grid-cols-5 h-fit gap-8 py-3">
+					{recomendations
 						.map((movieItem) => {
 							return (
 								<a href={`/movie/${movieItem.id}`}>
 									<img
 										className="w-full rounded-lg shadow-xl"
-										src={`https://image.tmdb.org/t/p/w500/${movieItem.poster_path}`}
+										src={`https://image.tmdb.org/t/p/w500/${movieItem.poster_url}`}
 										alt=""
 									/>
 								</a>
 							);
 						})}
-				</div> */}
+				</div>
 			</div>
 		</div>
 	) : null;
