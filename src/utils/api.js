@@ -53,7 +53,7 @@ api.interceptors.response.use(
 				// Refresh token failed, log out the user
 				localStorage.removeItem("access_token");
 				localStorage.removeItem("refresh_token");
-				//window.location.href = "/login"; // Redirect to login page
+				window.location.href = "/login"; // Redirect to login page
 				return Promise.reject(refreshError);
 			}
 		}

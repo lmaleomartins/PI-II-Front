@@ -94,7 +94,7 @@ export default function BrowserPage() {
 							/>
 						</label>
 					</div>
-					<div className="bg-[url(https://ntvb.tmsimg.com/assets/p16645155_v_h8_ae.jpg?w=960&h=540)] bg-no-repeat bg-cover bg-bottom	w-full h-80 rounded-b-3xl shadow-xl"></div>
+					<div className="bg-[url(https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2021/10/dune_1947.jpg?w=1200&h=675&crop=1)] bg-no-repeat bg-cover bg-bottom	w-full h-96 rounded-b-3xl shadow-xl"></div>
 				</div>
 			</div>
 

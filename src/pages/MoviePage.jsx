@@ -6,15 +6,16 @@ import { IoIosArrowBack } from "react-icons/io";
 import StarRating from "../components/StarRating";
 import axios from "axios";
 import api from "../utils/api";
+import MoviesList from "../components/MoviesList";
 
-export default function MoviePage({userInfo}) {
+export default function MoviePage({ userInfo }) {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [movie, setMovie] = useState();
 	const [search, setSearch] = useState("");
 	const [recomendations, setRecomendations] = useState([]);
 	const [userList, setUserList] = useState([]);
-	const [updated, setUpdated] = useState(false)
+	const [updated, setUpdated] = useState(false);
 
 	useEffect(() => {
 		const fetchList = async () => {
@@ -23,13 +24,13 @@ export default function MoviePage({userInfo}) {
 				const list = response.data.map((object) => object.movie);
 				setUserList(list);
 			} catch (error) {
-				console.log(error)
+				console.log(error);
 			}
 		};
-		if(userInfo){
+		if (userInfo) {
 			fetchList();
 		}
-		setUpdated(false)
+		setUpdated(false);
 	}, [updated]);
 	useEffect(() => {
 		const fetchPage = async () => {
@@ -46,10 +47,7 @@ export default function MoviePage({userInfo}) {
 		};
 		const fetchRecomended = async () => {
 			try {
-				const response = await axios({
-					method: "GET",
-					url: `http://127.0.0.1:8000/recommendations/similarity/${id}/`,
-				});
+				const response = await api.get(`/recommendations/similarity/${id}`);
 				const recomendations = response.data;
 				console.log(recomendations);
 				setRecomendations(recomendations);
@@ -75,7 +73,7 @@ export default function MoviePage({userInfo}) {
 				: "/watched-list/add/";
 			const packageData = movieInList ? { movie_id: id } : { movie: id };
 			await api.post(url, packageData);
-			setUpdated(true)
+			setUpdated(true);
 		} catch (error) {
 			console.log(error);
 		}
@@ -154,18 +152,8 @@ export default function MoviePage({userInfo}) {
 				<h2 className="w-fit border-b-[#9E896A] text-2xl font-semibold border-b-4 mt-2">
 					Titulos semelhantes
 				</h2>
-				<div className="grid grid-cols-5 h-fit gap-8 py-3">
-					{recomendations.map((movieItem) => {
-						return (
-							<a href={`/movie/${movieItem.id}`}>
-								<img
-									className="w-full rounded-lg shadow-xl"
-									src={`https://image.tmdb.org/t/p/w500/${movieItem.poster_url}`}
-									alt=""
-								/>
-							</a>
-						);
-					})}
+				<div className="-mx-8">
+					<MoviesList list={recomendations} />
 				</div>
 			</div>
 		</div>

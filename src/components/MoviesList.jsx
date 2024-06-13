@@ -12,7 +12,7 @@ export default function MoviesList({ list, lastMovieElementRef }) {
 							ref={lastMovieElementRef}
 						>
 							<img
-								className="w-full rounded-lg shadow-xl"
+								className="w-full h-full rounded-lg shadow-xl"
 								src={`https://image.tmdb.org/t/p/w300/${movie.poster_url}`}
 								alt=""
 							/>
@@ -22,7 +22,7 @@ export default function MoviesList({ list, lastMovieElementRef }) {
 					return (
 						<Link to={`/movie/${movie.id}`} key={movie.id}>
 							<img
-								className="w-full rounded-lg shadow-xl"
+								className="w-full h-full rounded-lg shadow-xl"
 								src={`https://image.tmdb.org/t/p/w300/${movie.poster_url}`}
 								alt=""
 							/>
