@@ -1,14 +1,43 @@
-import React from "react";
-import { FaStar } from "react-icons/fa";
+import { Rating } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import api from "../utils/api";
+import { useParams } from "react-router-dom";
 
 export default function StarRating() {
+	const [rating, setRating] = useState(0)
+	const { id } = useParams();
+
+	useEffect( () => {
+		const fetchRating = async () => {
+			try {
+				const response = await api.get(`/average-ratings`)
+				const filteredMovie = response.data.filter(movie => movie.movie === +id)[0]
+				const average = filteredMovie.avg_rating
+				if(average){
+					setRating(average)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		const fetchUserRating = async () => {
+			try {
+				const response = await api.get(`/user-rating/${id}`)
+				const userRating = response.data.rating
+				setRating(userRating)
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		if(localStorage.getItem("accessToken")){
+			fetchUserRating()
+		}
+		fetchRating()
+	}, [])
+	const handleChange = (e) => {
+		console.log(e.target.value)
+	}
 	return (
-		<fieldset className="flex justify-center text-xl text-gray-400">
-			<FaStar/>
-			<FaStar/>
-			<FaStar/>
-			<FaStar/>
-			<FaStar/>
-		</fieldset>
+		<Rating name="half-rating-read" defaultValue={0} precision={0.5} onChange={handleChange} value={rating}/>
 	);
 }
