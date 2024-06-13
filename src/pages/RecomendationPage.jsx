@@ -1,25 +1,33 @@
 import { FaSearch } from "react-icons/fa";
 import data from "../Data.json";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../utils/api";
+import MoviesList from "../components/MoviesList";
 
 export default function RecomendationPage({ userInfo }) {
+	const { id } = useParams();
+	const [recomendations, setRecomendations] = useState([]);
+	useEffect(()=> {
+		const fetchRecomended = async () => {
+			try {
+				const response = await api.get(`/recommendations/genre/`);
+				const recomendations = response.data;
+				console.log(recomendations);
+				setRecomendations(recomendations);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchRecomended()
+	},[])
 	return userInfo ? (
 		<div className="flex-grow w-full">
 			<h1 className="block mx-auto w-fit text-center border-b-[#9E896A] text-[#9E896A] text-3xl font-semibold mt-4 border-b-4">
 				Recomendações para você
 			</h1>
 
-			<div className="grid grid-cols-5 h-fit gap-8 p-8">
-				{data.map((movie) => {
-					return (
-						<img
-							className="w-full rounded-lg shadow-xl"
-							src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-							alt=""
-						/>
-					);
-				})}
-			</div>
+			<MoviesList list={recomendations} />
 		</div>
 	) : (
 		<div className="p-5 text-slate-400 flex-grow dark:text-slate-500 text-center text-5xl font-extrabold min-h-svh flex flex-col justify-center">
