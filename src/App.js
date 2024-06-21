@@ -24,7 +24,7 @@ function App() {
 	return (
 		<div className="bg-[#FAF9F6] min-h-svh text-slate-700 dark:bg-slate-800 dark:text-slate-300 flex">
 			<BrowserRouter basename="/">
-				<NavBar></NavBar>
+				<NavBar userInfo={userInfo} setUserInfo={setUserInfo}></NavBar>
 				<Routes>
 					<Route path="/" element={<BrowserPage />}></Route>
 					<Route

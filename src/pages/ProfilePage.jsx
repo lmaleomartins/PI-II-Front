@@ -23,11 +23,11 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 	useEffect(() => {
 		const fetchList = async () => {
 			const response = await api.get(`/watched-list/`);
-			const list = response.data.map(object => object.movie)
+			const list = response.data.map((object) => object.movie);
 			console.log(list);
 			setUserList(list);
 		};
-		if(userInfo){
+		if (userInfo) {
 			fetchList();
 		}
 	}, [userInfo]);
@@ -111,19 +111,11 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 					></Route>
 					<Route
 						path="/"
-						element={
-							<MoviesList
-								list={userList}
-							/>
-						}
+						element={<MoviesList list={userList} />}
 					></Route>
 					<Route
 						path="/list"
-						element={
-							<MoviesList
-								list={userList}
-							/>
-						}
+						element={<MoviesList list={userList} />}
 					></Route>
 					<Route path="/*" element={<Page404 />}></Route>
 				</Routes>

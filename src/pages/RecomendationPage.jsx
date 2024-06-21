@@ -8,7 +8,7 @@ import MoviesList from "../components/MoviesList";
 export default function RecomendationPage({ userInfo }) {
 	const { id } = useParams();
 	const [recomendations, setRecomendations] = useState([]);
-	useEffect(()=> {
+	useEffect(() => {
 		const fetchRecomended = async () => {
 			try {
 				const response = await api.get(`/recommendations/genre/`);
@@ -19,8 +19,10 @@ export default function RecomendationPage({ userInfo }) {
 				console.log(error);
 			}
 		};
-		fetchRecomended()
-	},[])
+		if (userInfo) {
+			fetchRecomended();
+		}
+	}, []);
 	return userInfo ? (
 		<div className="flex-grow w-full">
 			<h1 className="block mx-auto w-fit text-center border-b-[#9E896A] text-[#9E896A] text-3xl font-semibold mt-4 border-b-4">
