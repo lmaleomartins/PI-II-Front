@@ -34,8 +34,20 @@ export default function StarRating() {
 		}
 		fetchRating()
 	}, [])
-	const handleChange = (e) => {
+	const handleChange = async(e) => {
 		console.log(e.target.value)
+		try {
+			const notaNova = e.target.value
+			const response = await api.post(`/user-rating/${id}/`, {
+				rating: parseInt(notaNova),
+			})
+			const nota = response.data
+			if(nota){
+				setRating(nota)
+			}
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	return (
 		<Rating name="half-rating-read" defaultValue={0} precision={0.5} onChange={handleChange} value={rating}/>

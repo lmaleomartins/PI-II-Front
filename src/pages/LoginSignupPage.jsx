@@ -84,20 +84,23 @@ export default function LoginSignupPage({ setUserInfo }) {
 						Primeira regra do Clube da Luta: você não fala do Clube
 						da Luta
 					</p>
-					<p>Primeira regra do BILL: você fala sobre o BILL</p>
+					<p>Primeira regra do Director's Cut: você fala sobre o Director's Cut</p>
+					
 				</div>
 			</div>
 
 			<div className="flex-grow flex justify-center pt-20">
 				<div className="flex flex-col items-center max-w-md">
-					<h1 className="font-semibold">Bem-vindo ao BILL</h1>
+					<h1 className="font-semibold">Bem-vindo ao Director's Cut</h1>
 
 					<ToggleButton></ToggleButton>
-
+					<br />
 					<p>
 						Sua busca interminável por algo para assistir acaba
 						aqui.
 					</p>
+					<br />
+
 					<form
 						className="flex self-stretch flex-col"
 						action="post"
