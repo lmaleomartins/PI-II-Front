@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import LoginSignupPage from "./pages/LoginSignupPage";
 import Page404 from "./pages/Page404";
 import BrowserPage from "./pages/BrowserPage";
@@ -26,7 +26,7 @@ function App() {
 			<BrowserRouter basename="/">
 				<NavBar userInfo={userInfo} setUserInfo={setUserInfo}></NavBar>
 				<Routes>
-					<Route path="/" element={<BrowserPage />}></Route>
+				<Route path="/" element={<BrowserPage />} />
 					<Route
 						path="/genres"
 						element={<GenresPage userInfo={userInfo} />}

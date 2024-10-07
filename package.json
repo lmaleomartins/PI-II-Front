@@ -1,6 +1,6 @@
 {
   "name": "cinema-recomendation-frontend",
-  "homepage": "https://igor-ca.github.io/cinema-recomendation-frontend/",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
