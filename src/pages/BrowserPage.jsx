@@ -1,10 +1,11 @@
 import { FaSearch } from "react-icons/fa";
-import data from "../Data.json";
 import MoviesList from "../components/MoviesList";
 import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import debounce from "../utils/debounce";
 import { useSearchParams } from "react-router-dom";
+import imageUrl from "../images/directors_cut_banner.jpg";
+import { ReactComponent as ArrowUp } from "../images/216099_up_arrow_icon.svg";
 
 export default function BrowserPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -17,6 +18,7 @@ export default function BrowserPage() {
 	const [search, setSearch] = useState(initialSearch);
 	const [query, setQuery] = useState(initialSearch);
 	const observer = useRef();
+	const [isVisible, setIsVisible] = useState(false);
 
 	const fetchPage = async (pageNumber, searchQuery) => {
 		try {
@@ -59,6 +61,7 @@ export default function BrowserPage() {
 		}, 500),
 		[]
 	);
+
 	const lastMovieElementRef = useCallback(
 		(node) => {
 			if (observer.current) observer.current.disconnect();
@@ -71,6 +74,27 @@ export default function BrowserPage() {
 		},
 		[hasNext]
 	);
+
+	// Controlando a visibilidade do botão com base na rolagem da página
+	const handleScroll = () => {
+		if (window.scrollY > 300) {
+			setIsVisible(true);
+		} else {
+			setIsVisible(false);
+		}
+	};
+
+	// Adicionando o evento de scroll
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
 
 	return (
 		<div className="flex-grow w-full">
@@ -94,7 +118,14 @@ export default function BrowserPage() {
 							/>
 						</label>
 					</div>
-					<div className="bg-[url(https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2021/10/dune_1947.jpg?w=1200&h=675&crop=1)] bg-no-repeat bg-cover bg-bottom	w-full h-96 rounded-b-3xl shadow-xl"></div>
+					<div
+						className="bg-no-repeat bg-cover w-full h-80 rounded-b-3xl shadow-xl"
+						style={{
+							backgroundImage: `url(${imageUrl})`,
+							height: "400px",
+							backgroundPosition: "center",
+						}}
+					></div>
 				</div>
 			</div>
 
@@ -103,10 +134,17 @@ export default function BrowserPage() {
 			</h1>
 
 			{moviesList.length > 0 && (
-				<MoviesList
-					list={moviesList}
-					lastMovieElementRef={lastMovieElementRef}
-				/>
+				<MoviesList list={moviesList} lastMovieElementRef={lastMovieElementRef} />
+			)}
+
+			{/* Botão Voltar ao Topo */}
+			{isVisible && (
+				<button
+					className="fixed bottom-4 right-4 bg-[#9E896A] text-white p-3 rounded-full shadow-lg"
+					onClick={scrollToTop}
+				>
+					<ArrowUp className="w-7 h-7" style={{ fill: 'white' }} />
+				</button>
 			)}
 		</div>
 	);

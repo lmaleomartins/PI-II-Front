@@ -134,7 +134,7 @@ export default function MoviePage({ userInfo }) {
 							>
 								{checkWatchedMovie()
 									? "Remover da lista"
-									: "Marcar como assistido"}
+									: "Minha lista"}
 							</button>
 							<StarRating></StarRating>
 						</div>

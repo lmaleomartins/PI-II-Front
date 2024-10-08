@@ -147,7 +147,7 @@ export default function GenresPage({ userInfo }) {
 			api.post(`/users/${userInfo.id}/remove-favorite-genre/`, {
 				genre_ids: removeList,
 			});
-			navigate(`/profile`);
+			navigate(`/recomendations`);
 		} catch (error) {
 			console.log(error);
 		}
