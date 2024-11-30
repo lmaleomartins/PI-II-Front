@@ -11,7 +11,6 @@ export default function BrowserPage() {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const initialSearch = searchParams.get("search") || "";
 	const initialPage = parseInt(searchParams.get("page"), 10) || 1;
-
 	const [page, setPage] = useState(initialPage);
 	const [moviesList, setMoviesList] = useState([]);
 	const [hasNext, setHasNext] = useState(false);
