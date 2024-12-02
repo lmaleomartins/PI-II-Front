@@ -140,18 +140,24 @@ export default function GenresPage({ userInfo }) {
 	};
 	const updateGenresList = async () => {
 		const { addList, removeList } = getLists();
+	
 		try {
-			api.post(`/users/${userInfo.id}/add-favorite-genre/`, {
+			// Enviar a lista de adição, mesmo que esteja vazia
+			await api.post(`/users/${userInfo.id}/add-favorite-genre/`, {
 				genre_ids: addList,
 			});
-			api.post(`/users/${userInfo.id}/remove-favorite-genre/`, {
+	
+			// Enviar a lista de remoção, mesmo que esteja vazia
+			await api.post(`/users/${userInfo.id}/remove-favorite-genre/`, {
 				genre_ids: removeList,
 			});
+	
 			navigate(`/recomendations`);
 		} catch (error) {
-			console.log(error);
+			console.error("Erro ao atualizar gêneros:", error);
+			alert("Erro ao salvar suas preferências. Tente novamente.");
 		}
-	};
+	};	
 	return userInfo ? (
 		<div className="p-8 flex flex-col">
 			<div className="flex items-center gap-4 self-end">
