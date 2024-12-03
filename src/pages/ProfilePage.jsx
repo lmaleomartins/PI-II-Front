@@ -36,19 +36,6 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 		setActiveLink(location.pathname.replace("/profile", ""));
 	}, [location]);
 
-	const logout = async () => {
-		try {
-			const refreshToken = { refresh: userInfo.refreshToken };
-			console.log("User info:", userInfo);
-			await api.post("/logout/", refreshToken);
-			localStorage.clear();
-			setUserInfo(null);
-			navigate("/");
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	const handleEdit = async () => {
 		if (!newUsername.trim()) {
 			alert("O nome de usuário não pode estar vazio.");
@@ -114,13 +101,8 @@ export default function ProfilePage({ userInfo, setUserInfo }) {
 					</li>
 					<li className={getStyle(activeLink === "/list" || activeLink === "")}>
 						<Link to={"./list"} className="w-full block">
-							Minha lista
+							Assistidos
 						</Link>
-					</li>
-					<li className={getStyle(activeLink === "/logout")}>
-						<button className="w-full" onClick={logout}>
-							Sair
-						</button>
 					</li>
 				</ul>
 			</nav>

@@ -111,7 +111,7 @@ export default function BrowserPage() {
 								id="search"
 								name="search"
 								placeholder="Pesquisar ..."
-								className="bg-transparent placeholder:text-[#9E896A]/50 w-full p-2.5 mx-4"
+								className="bg-transparent placeholder:text-[#9E896A]/50 w-full p-2.5 mx-4 focus:outline-none"
 								onChange={handleChange}
 								value={search}
 							/>

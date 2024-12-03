@@ -172,7 +172,7 @@ export default function GenresPage({ userInfo }) {
 						id="search"
 						name="search"
 						placeholder="Pesquisar ..."
-						className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4"
+						className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4 focus:outline-none"
 					/>
 				</label>
 			</div>

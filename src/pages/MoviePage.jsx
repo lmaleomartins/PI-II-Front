@@ -32,6 +32,7 @@ export default function MoviePage({ userInfo }) {
 		}
 		setUpdated(false);
 	}, [updated]);
+
 	useEffect(() => {
 		const fetchPage = async () => {
 			try {
@@ -115,7 +116,7 @@ export default function MoviePage({ userInfo }) {
 								value={search}
 								onKeyDown={handleEnter}
 								onChange={handleChange}
-								className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4"
+								className="bg-[#9E896A] placeholder:text-white/50 w-full p-2.5 mx-4 focus:outline-none"
 							/>
 						</label>
 					</div>
@@ -133,11 +134,21 @@ export default function MoviePage({ userInfo }) {
 								onClick={addOrRemoveMovie}
 							>
 								{checkWatchedMovie()
-									? "Remover da lista"
-									: "Minha lista"}
+									? "Remover dos assistidos"
+									: "Marcar como assistido"}
 							</button>
 							<StarRating></StarRating>
 						</div>
+						{movie.youtube_path && (
+							<a
+								href={movie.youtube_path}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-white bg-red-600 p-2 rounded-md mt-3 block text-center"
+							>
+								Assista no YouTube
+							</a>
+						)}
 					</div>
 					<div className="flex-grow">
 						<h1 className="px-5 w-fit border-b-[#9E896A] text-2xl font-semibold border-b-4">
@@ -150,7 +161,7 @@ export default function MoviePage({ userInfo }) {
 					</div>
 				</div>
 				<h2 className="w-fit border-b-[#9E896A] text-2xl font-semibold border-b-4 mt-2">
-					Titulos semelhantes
+					Títulos semelhantes
 				</h2>
 				<div className="-mx-8">
 					<MoviesList list={recomendations} />
