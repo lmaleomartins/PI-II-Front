@@ -144,9 +144,9 @@ export default function MoviePage({ userInfo }) {
 								href={movie.youtube_path}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-white bg-red-600 p-2 rounded-md mt-3 block text-center"
+								className="text-white bg-[#AF1740] p-2 rounded-md mt-3 block text-center"
 							>
-								Assista no YouTube
+								Assista nossa resenha no YouTube!
 							</a>
 						)}
 					</div>
